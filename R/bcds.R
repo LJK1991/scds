@@ -92,7 +92,7 @@ bcds <- function(sce, ntop=500, srat=1, verb=FALSE, retRes=FALSE,
     res = xgb.cv(data =mm, nthread = 2, nrounds = 500, objective = "binary:logistic",
                  nfold=5,metrics=list("error"),prediction=TRUE,
                  early_stopping_rounds=2, tree_method="hist",subsample=0.5,verbose=0)
-    if ("early_stop" %in% names(res){
+    if ("early_stop" %in% names(res)){
       if (res$early_stop$stopped_by_max_rounds){
         ni = res$early_stop$best_iteration
       }
