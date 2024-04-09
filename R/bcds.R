@@ -109,7 +109,7 @@ bcds <- function(sce, ntop=500, srat=1, verb=FALSE, retRes=FALSE,
       if (res$early_stop$stopped_by_max_rounds){
         #not 100% sure if the cv_predict equals the pred in res.
         #when early stop occurs pred is not present.
-        sce$bcds_Score = res$cv_predict[[1]][seq_len(ncol(sce))]
+        sce$bcds_score = res$cv_predict[[1]][seq_len(ncol(sce))]
       }
     } else {
       sce$bcds_score = res$pred[seq_len(ncol(sce))]
