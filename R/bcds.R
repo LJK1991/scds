@@ -105,7 +105,15 @@ bcds <- function(sce, ntop=500, srat=1, verb=FALSE, retRes=FALSE,
     pre = xgboost(mm,nrounds=nmax,tree_method="hist",
                   nthread = 2, early_stopping_rounds = 2, subsample=0.5,
                   objective = "binary:logistic",verbose=0)
-    sce$bcds_score = res$pred[seq_len(ncol(sce))]
+    if ("early_stop" %in% names(res)){
+      if (res$early_stop$stopped_by_max_rounds){
+        #not 100% sure if the cv_predict equals the pred in res.
+        #when early stop occurs pred is not present.
+        sce$bcds_Score = res$cv_predict[[1]][seq_len(ncol(sce))]
+      }
+    } else {
+      sce$bcds_score = res$pred[seq_len(ncol(sce))]
+    }
     #- get doublet calls
     if(estNdbl){
       dbl.pre = stats::predict(pre, newdat= mm[seq(ncol(sce)+1,nrow(X)),])
